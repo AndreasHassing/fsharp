@@ -19,6 +19,7 @@ type LanguageFeature =
     | AndBang
     | NullableOptionalInterop
     | DefaultInterfaceMemberConsumption
+    | ExtensionConstraintSolutions
 
 /// LanguageVersion management
 type LanguageVersion =

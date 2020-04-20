@@ -135,7 +135,7 @@ and accOp cenv env (op, tyargs, args, _m) =
         accTypeInst cenv env enclTypeArgs
         accTypeInst cenv env methTypeArgs
         accTypeInst cenv env tys
-    | TOp.TraitCall (TTrait(tys, _nm, _, argtys, rty, _sln)) -> 
+    | TOp.TraitCall (TTrait(tys, _nm, _, argtys, rty, _sln, _traitCtxt)) -> 
         argtys |> accTypeInst cenv env 
         rty |> Option.iter (accTy cenv env)
         tys |> List.iter (accTy cenv env)
@@ -274,6 +274,15 @@ let UnsolvedTyparsOfModuleDef g amap denv (mdef, extraAttribs) =
         unsolved = [] }
    accModuleOrNamespaceDef cenv Nix mdef
    accAttribs cenv Nix extraAttribs
+   List.rev cenv.unsolved
+
+let UnsolvedTyparsOfExpr g amap denv expr =
+   let cenv = 
+      { g =g  
+        amap=amap 
+        denv=denv 
+        unsolved = [] }
+   accExpr cenv Nix expr
    List.rev cenv.unsolved
 
 
